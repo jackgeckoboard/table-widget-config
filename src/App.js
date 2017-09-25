@@ -1,48 +1,43 @@
 import React, { Component } from "react";
+import ColumnConfig from "./components/ColumnConfig";
 import Visualization from "./components/Visualization";
+import SpreadsheetPreview from "./components/SpreadsheetPreview";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      columns: [
-        {
-          key: 0,
-          label: "Column 1",
-          value: "A:A"
-        },
-        {
-          key: 1,
-          label: "Column 2",
-          value: "B:B"
-        }
-      ],
-      firstRowAsHeader: false,
+      firstRowAsHeader: true,
       menuOpen: false,
       menuPositionTop: 0,
       menuPositionLeft: 0,
-      showHeaderRow: true
+      showHeaderRow: true,
+      numberOfColumns: 2,
+      headings: ["Project", "Status", "Budget", "Manager", "Delivery"],
+      rows: [
+        ["Government", "Pending", "$110M", "Daniel Parker", "17 December 2017"],
+        ["Big Bank", "Scoping", "$42M", "Louise Davidson", "8 January 2018"],
+        [
+          "University",
+          "Development",
+          "$19M",
+          "Constantine Raptis",
+          "21 November 2017"
+        ]
+      ]
     };
   }
 
   handleAddColumn() {
-    const newColumn = {
-      key: this.state.columns.length + 1,
-      label: "Column " + (this.state.columns.length + 1),
-      value: " "
-    };
-
     this.setState({
-      columns: [...this.state.columns, newColumn]
+      numberOfColumns: this.state.numberOfColumns + 1
     });
   }
 
   handleDeleteColumn() {
-    if (this.state.columns.length > 2) {
-      var newColumns = this.state.columns;
-      newColumns.pop();
+    if (this.state.numberOfColumns > 2) {
       this.setState({
-        columns: newColumns
+        numberOfColumns: this.state.numberOfColumns - 1
       });
     }
     this.setState({
@@ -91,9 +86,7 @@ class App extends Component {
   }
 
   render() {
-    const multiColumn = this.state.columns.length > 2;
-
-    const disabled = this.state.columns.length > 4;
+    const disabled = this.state.numberOfColumns > 4;
 
     const firstRowAsHeader = this.state.firstRowAsHeader;
 
@@ -115,7 +108,10 @@ class App extends Component {
           <span className="pa3 dib fw5">Dashboard Name</span>
         </div>
         <div className="w-100 cf">
-          <div className="vh-100 bg-dark-gray w-30 pa3 fl">
+          <div
+            className="bg-dark-gray w-30 pa3 fl"
+            style={{ height: "calc(100vh - 98px)" }}
+          >
             <div className="w-100 br2 ba b--gray mb4">
               <div className="bg-gray pa2 tc fw5 f6 w-50 dib">Edit</div>
               <div className="pa2 tc fw5 f6 w-50 dib light-gray">Fine-tune</div>
@@ -125,7 +121,7 @@ class App extends Component {
               className="mb3 cf"
               onClick={this.switchFirstRowAsHeader.bind(this)}
             >
-              <div className="fl w-70">Use first row as header</div>
+              <div className="fl w-70">Use first selection cell as header</div>
               {firstRowAsHeader ? (
                 <div className="fr bg-green br4">
                   <div className="h1 w1 br4 mv1 mr1 ml4 bg-white" />
@@ -136,37 +132,13 @@ class App extends Component {
                 </div>
               )}
             </div>
-
-            {this.state.columns.map(function(column) {
-              return (
-                <div className="w-100 br2 overflow-hidden mb3">
-                  <div className="bg-mid-gray hover-bg-gray pv2 pl3 pr2 w-40 dib">
-                    <div className="pa1">
-                      {column.label}
-                      {multiColumn && (
-                        <span
-                          className="fr pointer pl2"
-                          onClick={this.openColumnMenu.bind(this)}
-                          ref={column.key}
-                        >
-                          <i className="fa fa-ellipsis-v" />
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                  <div
-                    className="pa1 w-60 dib bg-white near-black"
-                    style={{ height: 42 }}
-                  >
-                    <input
-                      type="text"
-                      className="pa2 bn"
-                      value={column.value}
-                    />
-                  </div>
-                </div>
-              );
-            }, this)}
+            <ColumnConfig
+              columns={this.state.headings}
+              numberOfColumns={this.state.numberOfColumns}
+              firstRowAsHeader={this.state.firstRowAsHeader}
+              multiColumn={this.state.numberOfColumns > 2}
+              openColumnMenu={this.openColumnMenu.bind(this)}
+            />
             {menuOpen && (
               <div
                 className="pa2 bg-light-gray br1 absolute ba b--moon-gray dark-gray f6"
@@ -204,11 +176,19 @@ class App extends Component {
               )}
             </div>
           </div>
-          <div className="w-70 fl pa4">
+          <div
+            className="w-70 fl pa4 relative"
+            style={{ height: "calc(100vh - 98px)" }}
+          >
             <Visualization
               showHeaderRow={this.state.showHeaderRow}
-              columns={this.state.columns.length}
+              numberOfColumns={this.state.numberOfColumns}
+              headings={this.state.headings}
+              rows={this.state.rows}
             />
+            <div className="absolute bottom-0 left-0 right-0">
+              <SpreadsheetPreview />
+            </div>
           </div>
         </div>
       </div>
