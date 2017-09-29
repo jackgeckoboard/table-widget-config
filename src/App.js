@@ -48,22 +48,12 @@ class App extends Component {
   switchFirstRowAsHeader() {
     if (this.state.firstRowAsHeader) {
       this.setState({
-        firstRowAsHeader: false
-      });
-    } else {
-      this.setState({
-        firstRowAsHeader: true
-      });
-    }
-  }
-
-  switchShowHeaderRow() {
-    if (this.state.showHeaderRow) {
-      this.setState({
+        firstRowAsHeader: false,
         showHeaderRow: false
       });
     } else {
       this.setState({
+        firstRowAsHeader: true,
         showHeaderRow: true
       });
     }
@@ -162,21 +152,6 @@ class App extends Component {
                 + Add column
               </div>
             )}
-            <div
-              className="mb3 cf"
-              onClick={this.switchShowHeaderRow.bind(this)}
-            >
-              <div className="fl w-70">Show column titles</div>
-              {showHeaderRow ? (
-                <div className="fr bg-ui-green br4">
-                  <div className="h1 w1 br4 mv1 mr1 ml4 bg-white" />
-                </div>
-              ) : (
-                <div className="fr bg-silver br4">
-                  <div className="h1 w1 br4 mv1 mr4 ml1 bg-white" />
-                </div>
-              )}
-            </div>
           </div>
           <div
             className="w-70 fl pa4 relative"
