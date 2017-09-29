@@ -48,24 +48,7 @@ class SpreadsheetPreview extends Component {
               <td className="w-20 pa2 ba b--light-gray fw4" />
             </tr>
           )}
-          <tr className="">
-            <td className="pa2 ba b--light-gray bg-near-white fw4">1</td>
-            <td className="w-20 pa2 ba b--light-gray fw4">Project</td>
-            <td className="w-20 pa2 ba b--light-gray fw4">Status</td>
-            <td className="w-20 pa2 ba b--light-gray fw4">Budget</td>
-            <td className="w-20 pa2 ba b--light-gray fw4">Manager</td>
-            <td className="w-20 pa2 ba b--light-gray fw4">Delivery</td>
-            <td className="w-20 pa2 ba b--light-gray fw4" />
-          </tr>
-          <tr className="">
-            <td className="pa2 ba b--light-gray bg-near-white fw4">1</td>
-            <td className="w-20 pa2 ba b--light-gray fw4">Project</td>
-            <td className="w-20 pa2 ba b--light-gray fw4">Status</td>
-            <td className="w-20 pa2 ba b--light-gray fw4">Budget</td>
-            <td className="w-20 pa2 ba b--light-gray fw4">Manager</td>
-            <td className="w-20 pa2 ba b--light-gray fw4">Delivery</td>
-            <td className="w-20 pa2 ba b--light-gray fw4" />
-          </tr>
+
           <tr className="">
             <td className="pa2 ba b--light-gray bg-near-white fw4">2</td>
             <td className="w-20 pa2 ba b--light-gray fw4">Government</td>
