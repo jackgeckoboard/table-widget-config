@@ -102,7 +102,7 @@ class App extends Component {
     return (
       <div className="white sans-serif">
         <div className="pa2 bg-near-black">
-          <div className="h2 w2 br2 bg-green" />
+          <div className="h2 w2 br2 bg-ui-green" />
         </div>
         <div className="bg-mid-gray">
           <span className="pa3 dib fw5">Dashboard Name</span>
@@ -121,9 +121,11 @@ class App extends Component {
               className="mb3 cf"
               onClick={this.switchFirstRowAsHeader.bind(this)}
             >
-              <div className="fl w-70">Use first selection cell as header</div>
+              <div className="fl w-80">
+                Use first selection cell as column title
+              </div>
               {firstRowAsHeader ? (
-                <div className="fr bg-green br4">
+                <div className="fr bg-ui-green br4">
                   <div className="h1 w1 br4 mv1 mr1 ml4 bg-white" />
                 </div>
               ) : (
@@ -149,12 +151,12 @@ class App extends Component {
               </div>
             )}
             {disabled ? (
-              <div className="mb4 bg-silver dark-gray dib pa2 br2 o-50">
+              <div className="mb4 bg-ui-light-gray dark-gray dib pa2 br2 o-50">
                 + Add column
               </div>
             ) : (
               <div
-                className="mb4 hover-bg-light-silver bg-animate bg-silver dark-gray dib pa2 br2 pointer"
+                className="mb4 hover-bg-light-silver bg-animate bg-ui-silver  ui-text-black dib pa2 br2 pointer"
                 onClick={this.handleAddColumn.bind(this)}
               >
                 + Add column
@@ -164,9 +166,9 @@ class App extends Component {
               className="mb3 cf"
               onClick={this.switchShowHeaderRow.bind(this)}
             >
-              <div className="fl w-70">Show header row</div>
+              <div className="fl w-70">Show column titles</div>
               {showHeaderRow ? (
-                <div className="fr bg-green br4">
+                <div className="fr bg-ui-green br4">
                   <div className="h1 w1 br4 mv1 mr1 ml4 bg-white" />
                 </div>
               ) : (
@@ -181,13 +183,16 @@ class App extends Component {
             style={{ height: "calc(100vh - 98px)" }}
           >
             <Visualization
+              firstRowAsHeader={this.state.firstRowAsHeader}
               showHeaderRow={this.state.showHeaderRow}
               numberOfColumns={this.state.numberOfColumns}
               headings={this.state.headings}
               rows={this.state.rows}
             />
             <div className="absolute bottom-0 left-0 right-0">
-              <SpreadsheetPreview />
+              <SpreadsheetPreview
+                firstRowAsHeader={this.state.firstRowAsHeader}
+              />
             </div>
           </div>
         </div>

@@ -2,8 +2,11 @@ import React, { Component } from "react";
 
 class SpreadsheetPreview extends Component {
   render() {
+    const headerStyle = {
+      borderBottom: "2px solid #aaa"
+    };
     return (
-      <div className="bg-white near-black sans-serif w-100">
+      <div className="bg-white near-black aktiv w-100">
         <table className="w-100 f6 collapse">
           <tr className=" bg-near-white">
             <th className=" pa2 ba b--light-gray fw4 tl" />
@@ -13,6 +16,46 @@ class SpreadsheetPreview extends Component {
             <th className="w-20 pa2 ba b--light-gray fw4 tl">D</th>
             <th className="w-20 pa2 ba b--light-gray fw4 tl">E</th>
             <th className="w-20 pa2 ba b--light-gray fw4 tl">F</th>
+          </tr>
+          {this.props.firstRowAsHeader ? (
+            <tr className="">
+              <td className="pa2 ba b--light-gray bg-near-white fw4">1</td>
+              <td className="w-20 pa2 ba b--light-gray fw4" style={headerStyle}>
+                Project
+              </td>
+              <td className="w-20 pa2 ba b--light-gray fw4" style={headerStyle}>
+                Status
+              </td>
+              <td className="w-20 pa2 ba b--light-gray fw4" style={headerStyle}>
+                Budget
+              </td>
+              <td className="w-20 pa2 ba b--light-gray fw4" style={headerStyle}>
+                Manager
+              </td>
+              <td className="w-20 pa2 ba b--light-gray fw4" style={headerStyle}>
+                Delivery
+              </td>
+              <td className="w-20 pa2 ba b--light-gray fw4" />
+            </tr>
+          ) : (
+            <tr className="">
+              <td className="pa2 ba b--light-gray bg-near-white fw4">1</td>
+              <td className="w-20 pa2 ba b--light-gray fw4">Project</td>
+              <td className="w-20 pa2 ba b--light-gray fw4">Status</td>
+              <td className="w-20 pa2 ba b--light-gray fw4">Budget</td>
+              <td className="w-20 pa2 ba b--light-gray fw4">Manager</td>
+              <td className="w-20 pa2 ba b--light-gray fw4">Delivery</td>
+              <td className="w-20 pa2 ba b--light-gray fw4" />
+            </tr>
+          )}
+          <tr className="">
+            <td className="pa2 ba b--light-gray bg-near-white fw4">1</td>
+            <td className="w-20 pa2 ba b--light-gray fw4">Project</td>
+            <td className="w-20 pa2 ba b--light-gray fw4">Status</td>
+            <td className="w-20 pa2 ba b--light-gray fw4">Budget</td>
+            <td className="w-20 pa2 ba b--light-gray fw4">Manager</td>
+            <td className="w-20 pa2 ba b--light-gray fw4">Delivery</td>
+            <td className="w-20 pa2 ba b--light-gray fw4" />
           </tr>
           <tr className="">
             <td className="pa2 ba b--light-gray bg-near-white fw4">1</td>

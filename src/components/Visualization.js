@@ -11,6 +11,27 @@ class Visualization extends Component {
               <tr className="f5 white-50 fw4">
                 {this.props.headings.map(function(heading, index) {
                   if (index < this.props.numberOfColumns) {
+                    if (this.props.firstRowAsHeader) {
+                      return (
+                        <th className="collapse tl bb b--white-10 pa3 fw4">
+                          {heading}
+                        </th>
+                      );
+                    } else {
+                      return (
+                        <th className="collapse tl bb b--white-10 pa3 fw4">
+                          Column {index + 1}
+                        </th>
+                      );
+                    }
+                  }
+                }, this)}
+              </tr>
+            )}
+            {!this.props.firstRowAsHeader && (
+              <tr className="f4">
+                {this.props.headings.map(function(heading, index) {
+                  if (index < this.props.numberOfColumns) {
                     return (
                       <th className="collapse tl bb b--white-10 pa3 fw4">
                         {heading}
