@@ -4,6 +4,13 @@ class ColumnConfig extends Component {
   openColumnMenu(event) {
     this.props.openColumnMenu(event);
   }
+
+  updateColumnNames(index, event) {
+    let names = this.props.columnNames;
+    names[index] = event.target.value;
+    this.props.updateColumnNames(names);
+    console.log(index + names);
+  }
   render() {
     return (
       <div>
@@ -14,9 +21,14 @@ class ColumnConfig extends Component {
                 <div className="bg-mid-gray hover-bg-gray pv2 pl3 pr2 w-40 dib">
                   <div className="pa1">
                     {this.props.firstRowAsHeader ? (
-                      column
+                      <input
+                        onChange={this.updateColumnNames.bind(this, index)}
+                        value={this.props.columnNames[index]}
+                        className="bg-transparent bn white w-90 input-reset"
+                        type="text"
+                      />
                     ) : (
-                      "Column " + (index + 1)
+                      <span>Column {index + 1}</span>
                     )}
 
                     {this.props.multiColumn && (
@@ -34,7 +46,11 @@ class ColumnConfig extends Component {
                   className="pa1 w-60 dib bg-white near-black"
                   style={{ height: 42 }}
                 >
-                  <input type="text" className="pa2 bn" value={column.value} />
+                  <input
+                    type="text"
+                    className="pa2 bn"
+                    value={this.props.columnCellReference[index]}
+                  />
                 </div>
               </div>
             );

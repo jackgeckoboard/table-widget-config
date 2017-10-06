@@ -24,8 +24,16 @@ class App extends Component {
           "Constantine Raptis",
           "21 November 2017"
         ]
-      ]
+      ],
+      columnCellReference: ["A:A", "B:B", "C:C", "D:D", "E:E"],
+      columnNames: []
     };
+  }
+
+  componentWillMount() {
+    this.setState({
+      columnNames: this.state.headings
+    });
   }
 
   handleAddColumn() {
@@ -75,6 +83,12 @@ class App extends Component {
     }
   }
 
+  updateColumnNames(names) {
+    this.setState({
+      columnNames: names
+    });
+  }
+
   render() {
     const disabled = this.state.numberOfColumns > 4;
 
@@ -112,7 +126,7 @@ class App extends Component {
               onClick={this.switchFirstRowAsHeader.bind(this)}
             >
               <div className="fl w-80">
-                Use first selection cell as column title
+                Use first selection cell as column header
               </div>
               {firstRowAsHeader ? (
                 <div className="fr bg-ui-green br4">
@@ -130,6 +144,9 @@ class App extends Component {
               firstRowAsHeader={this.state.firstRowAsHeader}
               multiColumn={this.state.numberOfColumns > 2}
               openColumnMenu={this.openColumnMenu.bind(this)}
+              columnCellReference={this.state.columnCellReference}
+              columnNames={this.state.columnNames}
+              updateColumnNames={this.updateColumnNames.bind(this)}
             />
             {menuOpen && (
               <div
