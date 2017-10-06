@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ColumnConfig from "./components/ColumnConfig";
 import Visualization from "./components/Visualization";
 import SpreadsheetPreview from "./components/SpreadsheetPreview";
+import FineTune from "./components/FineTune";
 
 class App extends Component {
   constructor(props) {
@@ -26,7 +27,8 @@ class App extends Component {
         ]
       ],
       columnCellReference: ["A:A", "B:B", "C:C", "D:D", "E:E"],
-      columnNames: []
+      columnNames: [],
+      fineTuneTab: false
     };
   }
 
@@ -89,6 +91,18 @@ class App extends Component {
     });
   }
 
+  toggleFineTune() {
+    if (this.state.fineTuneTab) {
+      this.setState({
+        fineTuneTab: false
+      });
+    } else {
+      this.setState({
+        fineTuneTab: true
+      });
+    }
+  }
+
   render() {
     const disabled = this.state.numberOfColumns > 4;
 
@@ -116,58 +130,72 @@ class App extends Component {
             className="bg-dark-gray w-30 pa3 fl"
             style={{ height: "calc(100vh - 98px)" }}
           >
-            <div className="w-100 br2 ba b--gray mb4">
-              <div className="bg-gray pa2 tc fw5 f6 w-50 dib">Edit</div>
-              <div className="pa2 tc fw5 f6 w-50 dib light-gray">Fine-tune</div>
-            </div>
+            {!this.state.fineTuneTab ? (
+              <div>
+                <div
+                  className="w-100 br2 ba b--gray mb4"
+                  onClick={this.toggleFineTune.bind(this)}
+                >
+                  <div className="bg-gray pa2 tc fw5 f6 w-50 dib">Edit</div>
+                  <div className="pa2 tc fw5 f6 w-50 dib light-gray">
+                    Fine-tune
+                  </div>
+                </div>
 
-            <div
-              className="mb3 cf"
-              onClick={this.switchFirstRowAsHeader.bind(this)}
-            >
-              <div className="fl w-80">
-                Use first selection cell as column header
-              </div>
-              {firstRowAsHeader ? (
-                <div className="fr bg-ui-green br4">
-                  <div className="h1 w1 br4 mv1 mr1 ml4 bg-white" />
+                <div
+                  className="mb3 cf"
+                  onClick={this.switchFirstRowAsHeader.bind(this)}
+                >
+                  <div className="fl w-80">
+                    Use first selection cell as column header
+                  </div>
+                  {firstRowAsHeader ? (
+                    <div className="fr bg-ui-green br4">
+                      <div className="h1 w1 br4 mv1 mr1 ml4 bg-white" />
+                    </div>
+                  ) : (
+                    <div className="fr bg-silver br4">
+                      <div className="h1 w1 br4 mv1 mr4 ml1 bg-white" />
+                    </div>
+                  )}
                 </div>
-              ) : (
-                <div className="fr bg-silver br4">
-                  <div className="h1 w1 br4 mv1 mr4 ml1 bg-white" />
+                <ColumnConfig
+                  columns={this.state.headings}
+                  numberOfColumns={this.state.numberOfColumns}
+                  firstRowAsHeader={this.state.firstRowAsHeader}
+                  multiColumn={this.state.numberOfColumns > 2}
+                  openColumnMenu={this.openColumnMenu.bind(this)}
+                  columnCellReference={this.state.columnCellReference}
+                  columnNames={this.state.columnNames}
+                  updateColumnNames={this.updateColumnNames.bind(this)}
+                />
+                {menuOpen && (
+                  <div
+                    className="pa2 bg-light-gray br1 absolute ba b--moon-gray dark-gray f6"
+                    style={menuPositionStyle}
+                    onClick={this.handleDeleteColumn.bind(this)}
+                  >
+                    <div className="pa1 pointer">Delete column</div>
+                  </div>
+                )}
+                {disabled ? (
+                  <div className="mb4 bg-ui-light-gray dark-gray dib pa2 br2 o-50">
+                    + Add column
+                  </div>
+                ) : (
+                  <div
+                    className="mb4 hover-bg-light-silver bg-animate bg-ui-silver  ui-text-black dib pa2 br2 pointer"
+                    onClick={this.handleAddColumn.bind(this)}
+                  >
+                    + Add column
+                  </div>
+                )}
+                <div className="">
+                  <span className="f6 ">This widget will update every 10m</span>
                 </div>
-              )}
-            </div>
-            <ColumnConfig
-              columns={this.state.headings}
-              numberOfColumns={this.state.numberOfColumns}
-              firstRowAsHeader={this.state.firstRowAsHeader}
-              multiColumn={this.state.numberOfColumns > 2}
-              openColumnMenu={this.openColumnMenu.bind(this)}
-              columnCellReference={this.state.columnCellReference}
-              columnNames={this.state.columnNames}
-              updateColumnNames={this.updateColumnNames.bind(this)}
-            />
-            {menuOpen && (
-              <div
-                className="pa2 bg-light-gray br1 absolute ba b--moon-gray dark-gray f6"
-                style={menuPositionStyle}
-                onClick={this.handleDeleteColumn.bind(this)}
-              >
-                <div className="pa1 pointer">Delete column</div>
-              </div>
-            )}
-            {disabled ? (
-              <div className="mb4 bg-ui-light-gray dark-gray dib pa2 br2 o-50">
-                + Add column
               </div>
             ) : (
-              <div
-                className="mb4 hover-bg-light-silver bg-animate bg-ui-silver  ui-text-black dib pa2 br2 pointer"
-                onClick={this.handleAddColumn.bind(this)}
-              >
-                + Add column
-              </div>
+              <FineTune toggleFineTune={this.toggleFineTune.bind(this)} />
             )}
           </div>
           <div
